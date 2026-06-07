@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import compiler.ai.AIErrorAssistant;
 import java.util.Scanner;
 
 public class Main {
@@ -42,7 +43,8 @@ public class Main {
         }
     }
 
-    private static void run(String source) {
+        private static void run(String source) {
+        AIErrorAssistant aiAssistant = new AIErrorAssistant();
         Lexer lexer = new Lexer(source);
         List<Token> tokens = lexer.scanTokens();
         Parser parser = new Parser(tokens);
@@ -50,6 +52,11 @@ public class Main {
         if (hadError) return;
         interpreter.interpret(statements);
     }
+
+        if (hadError) {
+            String aiHelp = aiAssistant.explainError("Parse error in source", source, 1);
+            System.out.println(aiHelp);
+        }
 
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
