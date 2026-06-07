@@ -1,64 +1,19 @@
 package compiler.lexer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class Lexer {
-    private static final Map<String, TokenType> KEYWORDS = new HashMap<>();
-
-    static {
-        KEYWORDS.put("let", TokenType.LET);
-        KEYWORDS.put("if", TokenType.IF);
-        KEYWORDS.put("else", TokenType.ELSE);
-        KEYWORDS.put("while", TokenType.WHILE);
-        KEYWORDS.put("for", TokenType.FOR);
-        KEYWORDS.put("function", TokenType.FUNCTION);
-        KEYWORDS.put("return", TokenType.RETURN);
-        KEYWORDS.put("print", TokenType.PRINT);
-        KEYWORDS.put("true", TokenType.TRUE);
-        KEYWORDS.put("false", TokenType.FALSE);
-        KEYWORDS.put("nil", TokenType.NIL);
-        KEYWORDS.put("and", TokenType.AND);
-        KEYWORDS.put("or", TokenType.OR);
-    }
-
-    private final String source;
-    private final List<Token> tokens = new ArrayList<>();
-    private int start = 0;
-    private int current = 0;
-    private int line = 1;
-
-    public Lexer(String source) {
-        this.source = source;
-    }
-
-    public List<Token> scanTokens() {
-        while (!isAtEnd()) {
-            start = current;
-            scanToken();
-        }
-        tokens.add(new Token(TokenType.EOF, "", null, line));
-        return tokens;
-    }
-
-    private void scanToken() {
-        char c = advance();
-        switch (c) {
-            case '(': addToken(TokenType.LEFT_PAREN); break;
-            case ')': addToken(TokenType.RIGHT_PAREN); break;
-            case '{': addToken(TokenType.LEFT_BRACE); break;
-            case '}': addToken(TokenType.RIGHT_BRACE); break;
-            case ',': addToken(TokenType.COMMA); break;
-            case ';': addToken(TokenType.SEMICOLON); break;
-            case '+': addToken(TokenType.PLUS); break;
-            case '-': addToken(TokenType.MINUS); break;
-            case '*': addToken(TokenType.STAR); break;
-            case '%': addToken(TokenType.PERCENT); break;
-            case '/':
-                if (match('/')) {
-                    while (peek() != '\n' && !isAtEnd()) advance();
+/**
+ * 词法分析器（Lexer）
+ *
+ * 编译原理第一阶段：将源代码字符串逐个字符扫描，识别并生成 token 序列。
+ *
+ * 实现要点：
+ * - 双指针（start/current）维护当前词素的起止位置
+ * - 采用"最长匹配"原则：识别最长的合法词素
+ * - 支持字符串字面量（"..."）、数字字面量（整数/浮点数）
+ * - 支持单行注释（//）
+ * - 关键字优先于标识符匹配（先查表，再回退）
+ * - 空白字符和换行符被跳过，换行用于更新行号
+ */
+\n' && !isAtEnd()) advance();
                 } else {
                     addToken(TokenType.SLASH);
                 }
