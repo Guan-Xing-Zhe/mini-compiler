@@ -9,6 +9,9 @@ A from-scratch compiler for a custom mini programming language (MiniLang), imple
 
 Built to demonstrate compiler theory fundamentals: lexical analysis, syntax analysis, AST representation, and runtime interpretation.
 
+基于 Java 手写的 MiniLang 编译器，完整实现词法分析、递归下降解析、AST 构建与树遍历解释器。
+聚焦编译原理核心概念，无第三方依赖，适合学习编程语言理论基础。
+
 ## Language Features
 
 ```
