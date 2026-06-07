@@ -13,7 +13,8 @@ package compiler.lexer;
  * - 关键字优先于标识符匹配（先查表，再回退）
  * - 空白字符和换行符被跳过，换行用于更新行号
  */
-\n' && !isAtEnd()) advance();
+
+' && !isAtEnd()) advance();
                 } else {
                     addToken(TokenType.SLASH);
                 }
@@ -23,7 +24,8 @@ package compiler.lexer;
             case '<': addToken(match('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
             case '>': addToken(match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
             case ' ': case '\r': case '\t': break;
-            case '\n': line++; break;
+            case '
+': line++; break;
             case '"': scanString(); break;
             default:
                 if (isDigit(c)) {
@@ -38,7 +40,8 @@ package compiler.lexer;
 
     private void scanString() {
         while (peek() != '"' && !isAtEnd()) {
-            if (peek() == '\n') line++;
+            if (peek() == '
+') line++;
             advance();
         }
         if (isAtEnd()) {
