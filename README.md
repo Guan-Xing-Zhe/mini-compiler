@@ -65,3 +65,18 @@ src/main/java/compiler/
 └── interpreter/
     └── Interpreter.java   # Tree-walking interpreter
 ```
+
+
+### AI Error Assistant
+
+The REPL and file runner include an AI-powered error assistant that:
+- Detects compilation and runtime errors
+- Explains errors in natural language with specific fix suggestions
+- Uses pattern matching (mock mode) or OpenAI API (real mode) for intelligent error analysis
+- Set OPENAI_API_KEY environment variable to enable real LLM mode
+
+```
+# Enable AI error explanations
+export OPENAI_API_KEY=sk-your-key
+java -cp out compiler.Main example.ml
+```
