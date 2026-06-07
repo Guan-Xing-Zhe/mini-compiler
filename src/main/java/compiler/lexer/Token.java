@@ -1,5 +1,14 @@
 package compiler.lexer;
 
+/**
+ * 词法单元（Token）
+ *
+ * 词法分析器（Lexer）的输出单位，包含：
+ * - type: token 类型（见 TokenType）
+ * - lexeme: 原始词素字符串
+ * - literal: 字面量的运行时值（如数字的 Double 值、字符串的 String 值）
+ * - line: 源代码行号，用于错误定位
+ */
 public class Token {
     public final TokenType type;
     public final String lexeme;
